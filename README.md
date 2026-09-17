@@ -12,6 +12,55 @@ personal data). This is built for personal home-security use on your own
 street — check your local rules (a visible notice is often required) before
 leaving it running long-term.
 
+## Technology Stack and Features
+
+### Technology Stack
+
+**Server**
+- Python, FastAPI, Uvicorn — HTTP API and web dashboard
+- Ultralytics YOLOv8 — real-time vehicle detection
+- OpenCV — image processing, frame annotation, plate-region localization
+- Anthropic Claude API (vision) — make/model identification and plate reading
+- openpyxl — Excel export with embedded thumbnails and hyperlinks
+- python-dotenv — environment/secrets configuration
+
+**Android app**
+- Kotlin
+- CameraX — camera preview, frame capture, zoom control
+- OkHttp — frame upload over HTTP
+- Android foreground Service — continuous background streaming
+- Gradle (Kotlin DSL)
+
+**Reference/legacy pipeline** (kept for comparison, not used live — see
+[Tuning & known limitations](#tuning--known-limitations))
+- EasyOCR, Hugging Face Transformers, PyTorch, timm — free/local OCR and
+  make/model classification
+
+### Features
+
+- Live Wi-Fi video streaming from an Android phone to a home server, no
+  cloud hosting required
+- Real-time vehicle detection with bounding-box overlay
+- AI-powered make/model identification and license plate reading
+- Position-based deduplication so one passing car produces one log entry,
+  not one per frame
+- Adjustable camera zoom (1x / 2x / 5x) and configurable frame interval
+- Background-safe streaming that keeps running with the screen off or the
+  app backgrounded
+- Non-blocking architecture — slow API calls never freeze the live feed
+- Live view page with detection and plate-region overlay for aiming and
+  monitoring
+- Web dashboard with:
+  - Cars / Archive tabs (auto-sorts unidentified or manually archived
+    detections)
+  - Date-range filters (Today, Yesterday, This week, Last week, This month)
+  - Top-5 manufacturers chart
+  - Hour-by-hour traffic timeline
+- Excel export with embedded thumbnails, clickable links to full
+  snapshots, and crash-safe atomic writes
+- One-click archive workflow to move bad or unidentified captures out of
+  the main log
+
 ## How it works
 
 ```
@@ -40,23 +89,6 @@ Both the phone and the PC must be on the same Wi-Fi network. Everything
 else — the live camera feed, the dashboard, the Excel file — is served
 locally; nothing leaves your network except the one cropped photo per
 detected car sent to the Claude API for identification.
-
-## Features
-
-- **Live view** (`/view`) — the camera feed with detection boxes drawn in
-  real time, so you can check framing/focus without touching the phone.
-- **Dashboard** (`/dashboard`) — a two-pane page reading straight from the
-  Excel file: a **Cars** tab for fully-identified detections and an
-  **Archive** tab for anything with an unknown model or unreadable plate
-  (or manually archived from the Cars tab), plus a date-range picker
-  (Today / Yesterday / This week / Last week / This month), a top-5
-  manufacturers chart, and an hour-by-hour traffic timeline.
-- **Excel export** — one row per car with an embedded thumbnail and a
-  clickable link to the full snapshot, kept crash-safe via atomic writes.
-- **Background-safe streaming** — a foreground Android service keeps the
-  camera running (and the phone reachable to reinstall from a local APK)
-  even with the screen off, and the identification API call runs off the
-  request path so a slow response never freezes the live feed.
 
 ## 1. Run the server
 
