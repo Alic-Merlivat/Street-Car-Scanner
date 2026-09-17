@@ -46,6 +46,27 @@ leaving it running long-term.
 
 ## How it works
 
+### Scanning from the app
+
+The Android app streams live video to the server and lets you pick a zoom
+level (1x/2x/5x) while it's running.
+
+![Vehicle streaming from the Android app](docs/mobile-app.png)
+
+### Detection on the server
+
+The server finds the vehicle (green box) and localizes the plate (blue box)
+before sending the crop off for identification.
+
+![Vehicle and plate detection on the server](docs/car-scanned.png)
+
+### Result on the dashboard
+
+Once identified, the vehicle's make/model and plate show up in the web
+dashboard alongside its snapshot.
+
+![Detected vehicle on the Street Watch dashboard](docs/platform.png)
+
 ```
 Android phone (camera, CameraX)              Python server (FastAPI)
   - live preview + 1x/2x/5x zoom               |
