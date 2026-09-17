@@ -14,52 +14,35 @@ leaving it running long-term.
 
 ## Technology Stack and Features
 
-### Technology Stack
-
-**Server**
-- Python, FastAPI, Uvicorn — HTTP API and web dashboard
-- Ultralytics YOLOv8 — real-time vehicle detection
-- OpenCV — image processing, frame annotation, plate-region localization
-- Anthropic Claude API (vision) — make/model identification and plate reading
-- openpyxl — Excel export with embedded thumbnails and hyperlinks
-- python-dotenv — environment/secrets configuration
-
-**Android app**
-- Kotlin
-- CameraX — camera preview, frame capture, zoom control
-- OkHttp — frame upload over HTTP
-- Android foreground Service — continuous background streaming
-- Gradle (Kotlin DSL)
-
-**Reference/legacy pipeline** (kept for comparison, not used live — see
-[Tuning & known limitations](#tuning--known-limitations))
-- EasyOCR, Hugging Face Transformers, PyTorch, timm — free/local OCR and
-  make/model classification
-
-### Features
-
-- Live Wi-Fi video streaming from an Android phone to a home server, no
-  cloud hosting required
-- Real-time vehicle detection with bounding-box overlay
-- AI-powered make/model identification and license plate reading
-- Position-based deduplication so one passing car produces one log entry,
-  not one per frame
-- Adjustable camera zoom (1x / 2x / 5x) and configurable frame interval
-- Background-safe streaming that keeps running with the screen off or the
-  app backgrounded
-- Non-blocking architecture — slow API calls never freeze the live feed
-- Live view page with detection and plate-region overlay for aiming and
-  monitoring
-- Web dashboard with:
-  - Cars / Archive tabs (auto-sorts unidentified or manually archived
-    detections)
-  - Date-range filters (Today, Yesterday, This week, Last week, This month)
-  - Top-5 manufacturers chart
-  - Hour-by-hour traffic timeline
-- Excel export with embedded thumbnails, clickable links to full
-  snapshots, and crash-safe atomic writes
-- One-click archive workflow to move bad or unidentified captures out of
-  the main log
+- ⚡ [FastAPI](https://fastapi.tiangolo.com/) for the Python server and web dashboard.
+  - 🚀 [Uvicorn](https://www.uvicorn.org/) as the ASGI server.
+  - 🧠 [Ultralytics YOLOv8](https://docs.ultralytics.com/) for real-time vehicle detection.
+  - 👁️ [OpenCV](https://opencv.org/) for image processing, frame annotation, and plate-region localization.
+  - 🤖 [Anthropic Claude API](https://docs.anthropic.com/) (vision) for make/model identification and plate reading.
+  - 📗 [openpyxl](https://openpyxl.readthedocs.io/) for Excel export with embedded thumbnails and hyperlinks.
+  - 🔑 [python-dotenv](https://pypi.org/project/python-dotenv/) for environment/secrets configuration.
+- 📱 Android app written in Kotlin.
+  - 📷 [CameraX](https://developer.android.com/training/camerax) for camera preview, frame capture, and zoom control.
+  - 🌐 [OkHttp](https://square.github.io/okhttp/) for frame upload over HTTP.
+  - 🔁 An Android foreground Service for continuous background streaming.
+  - 🐘 [Gradle](https://gradle.org/) (Kotlin DSL) as the build system.
+- 🗄️ Reference/legacy pipeline, kept for comparison and not used live (see [Tuning & known limitations](#tuning--known-limitations)).
+  - 🔤 [EasyOCR](https://github.com/JaidedAI/EasyOCR), [Hugging Face Transformers](https://huggingface.co/docs/transformers/index), [PyTorch](https://pytorch.org/), and [timm](https://github.com/huggingface/pytorch-image-models) for free/local OCR and make/model classification.
+- 🎥 Live Wi-Fi video streaming from an Android phone to a home server, no cloud hosting required.
+- 🚗 Real-time vehicle detection with bounding-box overlay.
+- 🔍 AI-powered make/model identification and license plate reading.
+- 🧮 Position-based deduplication so one passing car produces one log entry, not one per frame.
+- 🔎 Adjustable camera zoom (1x / 2x / 5x) and configurable frame interval.
+- 🌙 Background-safe streaming that keeps running with the screen off or the app backgrounded.
+- ⚙️ Non-blocking architecture — slow API calls never freeze the live feed.
+- 🖥️ Live view page with detection and plate-region overlay for aiming and monitoring.
+- 📋 Web dashboard with:
+  - 🗂️ Cars / Archive tabs (auto-sorts unidentified or manually archived detections).
+  - 📅 Date-range filters (Today, Yesterday, This week, Last week, This month).
+  - 🏭 Top-5 manufacturers chart.
+  - ⏰ Hour-by-hour traffic timeline.
+- 📁 Excel export with embedded thumbnails, clickable links to full snapshots, and crash-safe atomic writes.
+- 🗃️ One-click archive workflow to move bad or unidentified captures out of the main log.
 
 ## How it works
 
