@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+python-multipart
+ultralytics
+opencv-python-headless
+easyocr
+transformers
+torch
+openpyxl
+numpy
+pillow
+anthropic
+python-dotenv
